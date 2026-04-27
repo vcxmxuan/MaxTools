@@ -19,14 +19,22 @@ struct DashboardView: View {
 
                 NativePanel {
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("工具目录")
-                            .font(.headline)
+                        HStack {
+                            Text("工具目录")
+                                .font(.headline)
+                            Spacer()
+                            StatusPill(title: "液态玻璃", systemImage: "sparkles", color: .cyan)
+                        }
 
                         ForEach(ToolRegistry.tools.filter { $0.name != "总览" }) { tool in
                             HStack(spacing: 12) {
-                                Image(systemName: tool.systemImage)
-                                    .foregroundStyle(.tint)
-                                    .frame(width: 26)
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .fill(.thinMaterial)
+                                    Image(systemName: tool.systemImage)
+                                        .foregroundStyle(.cyan)
+                                }
+                                .frame(width: 34, height: 34)
                                 VStack(alignment: .leading, spacing: 2) {
                                     Text(tool.name)
                                         .font(.callout.weight(.medium))
@@ -63,7 +71,7 @@ struct DashboardView: View {
             }
             .padding(24)
         }
-        .background(AppTheme.page)
+        .background(LiquidGlassBackground())
     }
 }
 
@@ -77,7 +85,7 @@ private struct StatusCard: View {
             VStack(alignment: .leading, spacing: 8) {
                 Image(systemName: symbol)
                     .font(.title3)
-                    .foregroundStyle(.tint)
+                    .foregroundStyle(.cyan)
                 Text(value)
                     .font(.title2.weight(.semibold))
                 Text(title)

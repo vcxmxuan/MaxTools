@@ -34,7 +34,7 @@ struct ServerOpsView: View {
                             HStack(alignment: .top, spacing: 14) {
                                 Image(systemName: check.systemImage)
                                     .font(.title3)
-                                    .foregroundStyle(.tint)
+                                    .foregroundStyle(.cyan)
                                     .frame(width: 28)
 
                                 VStack(alignment: .leading, spacing: 4) {
@@ -64,7 +64,7 @@ struct ServerOpsView: View {
             }
             .padding(24)
         }
-        .background(AppTheme.page)
+        .background(LiquidGlassBackground())
     }
 }
 

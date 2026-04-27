@@ -5,9 +5,24 @@ struct RootView: View {
 
     var body: some View {
         NavigationSplitView {
-            List(ToolRegistry.tools, selection: $selectedToolID) { tool in
-                Label(tool.name, systemImage: tool.systemImage)
-                    .tag(tool.id)
+            ZStack {
+                LinearGradient(
+                    colors: [
+                        Color.white.opacity(0.06),
+                        Color.cyan.opacity(0.05),
+                        Color.black.opacity(0.08)
+                    ],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .ignoresSafeArea()
+
+                List(ToolRegistry.tools, selection: $selectedToolID) { tool in
+                    Label(tool.name, systemImage: tool.systemImage)
+                        .tag(tool.id)
+                        .listRowBackground(Color.clear)
+                }
+                .scrollContentBackground(.hidden)
             }
             .navigationTitle("MaxTools")
             .navigationSplitViewColumnWidth(min: 220, ideal: 240)

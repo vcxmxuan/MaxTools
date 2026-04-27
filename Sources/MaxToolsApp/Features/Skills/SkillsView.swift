@@ -56,7 +56,7 @@ struct SkillsView: View {
                                 HStack {
                                     Image(systemName: skill.systemImage)
                                         .font(.title2)
-                                        .foregroundStyle(.tint)
+                                        .foregroundStyle(.cyan)
                                     Spacer()
                                     StatusPill(title: skill.status, systemImage: "checkmark.circle", color: .green)
                                 }
@@ -81,7 +81,7 @@ struct SkillsView: View {
             }
             .padding(24)
         }
-        .background(AppTheme.page)
+        .background(LiquidGlassBackground())
     }
 }
 

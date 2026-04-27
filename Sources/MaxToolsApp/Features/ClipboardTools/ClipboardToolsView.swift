@@ -42,6 +42,6 @@ struct ClipboardToolsView: View {
                 .frame(minHeight: 360)
         }
         .padding(24)
-        .background(AppTheme.page)
+        .background(LiquidGlassBackground())
     }
 }

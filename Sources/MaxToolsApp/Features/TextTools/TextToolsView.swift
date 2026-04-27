@@ -44,7 +44,7 @@ struct TextToolsView: View {
                 .frame(minHeight: 320)
         }
         .padding(24)
-        .background(AppTheme.page)
+        .background(LiquidGlassBackground())
     }
 }
 
@@ -62,8 +62,8 @@ private struct MetricView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(16)
-        .background(.regularMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: 8))
-        .overlay { RoundedRectangle(cornerRadius: 8).stroke(AppTheme.separator, lineWidth: 0.5) }
+        .background(.ultraThinMaterial)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .overlay { RoundedRectangle(cornerRadius: 12).stroke(.white.opacity(0.22), lineWidth: 0.7) }
     }
 }
