@@ -21,7 +21,7 @@ struct ServerOpsView: View {
 
                 NativePanel {
                     HStack(spacing: 12) {
-                        StatusPill(title: "JD Cloud", systemImage: "cloud", color: .blue)
+                        StatusPill(title: "JD Cloud", systemImage: "cloud", color: .accentColor)
                         StatusPill(title: "宝塔优先", systemImage: "rectangle.and.hand.point.up.left", color: .green)
                         StatusPill(title: "生产环境", systemImage: "exclamationmark.triangle", color: .orange)
                         Spacer()
@@ -34,7 +34,7 @@ struct ServerOpsView: View {
                             HStack(alignment: .top, spacing: 14) {
                                 Image(systemName: check.systemImage)
                                     .font(.title3)
-                                    .foregroundStyle(.cyan)
+                                    .foregroundStyle(.tint)
                                     .frame(width: 28)
 
                                 VStack(alignment: .leading, spacing: 4) {

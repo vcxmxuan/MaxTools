@@ -6,16 +6,9 @@ struct RootView: View {
     var body: some View {
         NavigationSplitView {
             ZStack {
-                LinearGradient(
-                    colors: [
-                        Color.white.opacity(0.06),
-                        Color.cyan.opacity(0.05),
-                        Color.black.opacity(0.08)
-                    ],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-                .ignoresSafeArea()
+                Color(nsColor: .controlBackgroundColor)
+                    .opacity(0.72)
+                    .ignoresSafeArea()
 
                 List(ToolRegistry.tools, selection: $selectedToolID) { tool in
                     Label(tool.name, systemImage: tool.systemImage)

@@ -1,7 +1,7 @@
 import SwiftUI
 
 enum AppTheme {
-    static let page = Color(red: 0.06, green: 0.075, blue: 0.095)
+    static let page = Color(nsColor: .windowBackgroundColor)
     static let panel = Color(nsColor: .controlBackgroundColor).opacity(0.72)
     static let elevated = Color(nsColor: .textBackgroundColor).opacity(0.88)
     static let separator = Color(nsColor: .separatorColor).opacity(0.55)
@@ -12,37 +12,7 @@ enum AppTheme {
 
 struct LiquidGlassBackground: View {
     var body: some View {
-        ZStack {
-            LinearGradient(
-                colors: [
-                    Color(red: 0.04, green: 0.055, blue: 0.075),
-                    Color(red: 0.095, green: 0.105, blue: 0.13),
-                    Color(red: 0.045, green: 0.08, blue: 0.085)
-                ],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-
-            RadialGradient(
-                colors: [
-                    Color.cyan.opacity(0.18),
-                    Color.clear
-                ],
-                center: .topLeading,
-                startRadius: 40,
-                endRadius: 520
-            )
-
-            RadialGradient(
-                colors: [
-                    Color.indigo.opacity(0.16),
-                    Color.clear
-                ],
-                center: .bottomTrailing,
-                startRadius: 20,
-                endRadius: 520
-            )
-        }
+        Color(nsColor: .underPageBackgroundColor)
         .ignoresSafeArea()
     }
 }
@@ -62,32 +32,14 @@ struct LiquidGlassPanel<Content: View>: View {
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .overlay {
                 RoundedRectangle(cornerRadius: 12)
-                    .stroke(
-                        LinearGradient(
-                            colors: [
-                                .white.opacity(0.56),
-                                .white.opacity(0.14),
-                                .cyan.opacity(0.22)
-                            ],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        ),
-                        lineWidth: 0.8
-                    )
+                    .stroke(.white.opacity(isHovering ? 0.36 : 0.22), lineWidth: 0.8)
             }
             .overlay(alignment: .topLeading) {
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(
-                        LinearGradient(
-                            colors: [
-                                .white.opacity(0.24),
-                                .white.opacity(0.04),
-                                .clear
-                            ],
-                            startPoint: .topLeading,
-                            endPoint: .center
-                        )
-                    )
+                    .fill(.white.opacity(isHovering ? 0.12 : 0.08))
+                    .frame(height: 1)
+                    .padding(.horizontal, 14)
+                    .padding(.top, 1)
                     .blendMode(.screen)
                     .allowsHitTesting(false)
             }
@@ -129,20 +81,14 @@ struct ToolHeader: View {
                     }
                 Image(systemName: systemImage)
                     .font(.system(size: 28, weight: .semibold))
-                    .foregroundStyle(
-                        LinearGradient(
-                            colors: [.cyan, .blue, .purple],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
+                    .foregroundStyle(.tint)
             }
             .frame(width: 64, height: 64)
 
             VStack(alignment: .leading, spacing: 6) {
                 Text(eyebrow)
                     .font(.caption.weight(.semibold))
-                    .foregroundStyle(.cyan.opacity(0.9))
+                    .foregroundStyle(.secondary)
                 Text(title)
                     .font(.system(size: 28, weight: .semibold, design: .rounded))
                     .foregroundStyle(.primary)
@@ -161,17 +107,7 @@ struct PrimaryActionButtonStyle: ButtonStyle {
             .foregroundStyle(.white)
             .padding(.horizontal, 14)
             .padding(.vertical, 9)
-            .background(
-                LinearGradient(
-                    colors: [
-                        .cyan.opacity(configuration.isPressed ? 0.64 : 0.95),
-                        .blue.opacity(configuration.isPressed ? 0.62 : 0.9),
-                        .purple.opacity(configuration.isPressed ? 0.58 : 0.82)
-                    ],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-            )
+            .background(AppTheme.accent.opacity(configuration.isPressed ? 0.72 : 1))
             .clipShape(RoundedRectangle(cornerRadius: 8))
             .overlay {
                 RoundedRectangle(cornerRadius: 8)

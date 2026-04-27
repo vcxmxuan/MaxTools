@@ -23,7 +23,7 @@ struct DashboardView: View {
                             Text("工具目录")
                                 .font(.headline)
                             Spacer()
-                            StatusPill(title: "液态玻璃", systemImage: "sparkles", color: .cyan)
+                            StatusPill(title: "液态玻璃", systemImage: "sparkles", color: .accentColor)
                         }
 
                         ForEach(ToolRegistry.tools.filter { $0.name != "总览" }) { tool in
@@ -32,7 +32,7 @@ struct DashboardView: View {
                                     RoundedRectangle(cornerRadius: 8)
                                         .fill(.thinMaterial)
                                     Image(systemName: tool.systemImage)
-                                        .foregroundStyle(.cyan)
+                                        .foregroundStyle(.tint)
                                 }
                                 .frame(width: 34, height: 34)
                                 VStack(alignment: .leading, spacing: 2) {
@@ -85,7 +85,7 @@ private struct StatusCard: View {
             VStack(alignment: .leading, spacing: 8) {
                 Image(systemName: symbol)
                     .font(.title3)
-                    .foregroundStyle(.cyan)
+                    .foregroundStyle(.tint)
                 Text(value)
                     .font(.title2.weight(.semibold))
                 Text(title)
