@@ -12,6 +12,18 @@ struct ContentView: View {
         selection ?? .overview
     }
 
+    private var visibleSections: [ToolSection] {
+        let query = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !query.isEmpty else {
+            return ToolSection.allCases
+        }
+
+        return ToolSection.allCases.filter {
+            $0.rawValue.localizedStandardContains(query) ||
+            $0.summary.localizedStandardContains(query)
+        }
+    }
+
     private var metrics: TextMetrics {
         TextMetrics(workingText)
     }
@@ -30,39 +42,43 @@ struct ContentView: View {
 
     var body: some View {
         NavigationSplitView {
-            List(ToolSection.allCases, selection: $selection) { section in
+            List(visibleSections, selection: $selection) { section in
                 Label(section.rawValue, systemImage: section.symbol)
                     .tag(section)
             }
             .navigationTitle("MaxTools")
-            .searchable(text: $searchText, prompt: "搜索工具")
         } detail: {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 20) {
-                    header
+            ZStack {
+                DetailBackground(section: selectedSection)
+                    .backgroundExtensionEffect()
 
-                    switch selectedSection {
-                    case .overview:
-                        overview
-                    case .skills:
-                        skills
-                    case .clipboard:
-                        clipboard
-                    case .text:
-                        textTools
-                    case .files:
-                        fileTools
-                    case .server:
-                        server
-                    case .url:
-                        urlTools
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 20) {
+                        header
+
+                        switch selectedSection {
+                        case .overview:
+                            overview
+                        case .skills:
+                            skills
+                        case .clipboard:
+                            clipboard
+                        case .text:
+                            textTools
+                        case .files:
+                            fileTools
+                        case .server:
+                            server
+                        case .url:
+                            urlTools
+                        }
                     }
+                    .padding(28)
                 }
-                .padding(28)
+                .scrollEdgeEffectStyle(.soft, for: .vertical)
             }
-            .scrollEdgeEffectStyle(.soft, for: .vertical)
-            .background(Color(nsColor: .windowBackgroundColor).backgroundExtensionEffect())
         }
+        .searchable(text: $searchText, placement: .sidebar, prompt: "搜索工具")
         .toolbar {
             ToolbarSpacer(.flexible)
 
@@ -126,7 +142,7 @@ struct ContentView: View {
                         .padding(16)
                     }
                     .buttonStyle(.plain)
-                    .glassEffect(.regular.interactive(), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+                    .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 18))
                 }
             }
         }
@@ -232,7 +248,7 @@ struct ContentView: View {
             .scrollContentBackground(.hidden)
             .padding(12)
             .frame(minHeight: 320)
-            .glassEffect(.regular.interactive(), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+            .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 18))
     }
 
     private func metric(_ title: String, _ value: Int) -> some View {
@@ -245,7 +261,7 @@ struct ContentView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(16)
-        .glassEffect(.regular.interactive(), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 18))
     }
 
     private func infoRow(_ title: String, _ detail: String, _ symbol: String) -> some View {
@@ -266,7 +282,7 @@ struct ContentView: View {
             Spacer()
         }
         .padding(16)
-        .glassEffect(.regular.interactive(), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 18))
     }
 
     private func resultPanel(_ title: String, _ value: String, _ symbol: String) -> some View {
@@ -283,6 +299,27 @@ struct ContentView: View {
             Spacer()
         }
         .padding(16)
-        .glassEffect(.regular.interactive(), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 18))
+    }
+}
+
+private struct DetailBackground: View {
+    let section: ToolSection
+
+    var body: some View {
+        VStack(spacing: 0) {
+            Rectangle()
+                .fill(Color(nsColor: .controlBackgroundColor))
+                .frame(height: 180)
+                .overlay(alignment: .trailing) {
+                    Image(systemName: section.symbol)
+                        .font(.system(size: 96, weight: .regular))
+                        .foregroundStyle(.quaternary)
+                        .padding(.trailing, 48)
+                }
+
+            Color(nsColor: .windowBackgroundColor)
+        }
+        .ignoresSafeArea()
     }
 }
