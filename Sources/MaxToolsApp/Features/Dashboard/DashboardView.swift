@@ -72,7 +72,6 @@ struct DashboardView: View {
             .padding(24)
         }
         .scrollEdgeEffectStyle(.soft, for: .vertical)
-        .background(LiquidGlassBackground())
     }
 }
 

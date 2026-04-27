@@ -44,7 +44,6 @@ struct TextToolsView: View {
                 .frame(minHeight: 320)
         }
         .padding(24)
-        .background(LiquidGlassBackground())
     }
 }
 

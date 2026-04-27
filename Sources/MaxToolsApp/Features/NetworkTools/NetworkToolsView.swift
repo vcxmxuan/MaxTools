@@ -39,7 +39,6 @@ struct NetworkToolsView: View {
             Spacer()
         }
         .padding(24)
-        .background(LiquidGlassBackground())
     }
 }
 

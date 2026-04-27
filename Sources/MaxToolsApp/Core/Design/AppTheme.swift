@@ -12,7 +12,7 @@ enum AppTheme {
 
 struct LiquidGlassBackground: View {
     var body: some View {
-        Color(nsColor: .underPageBackgroundColor)
+        Color(nsColor: .windowBackgroundColor)
             .backgroundExtensionEffect()
             .ignoresSafeArea()
     }
@@ -32,7 +32,6 @@ struct LiquidGlassPanel<Content: View>: View {
                 .padding(16)
                 .glassEffect(.regular.interactive(isHovering), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
         }
-            .shadow(color: .black.opacity(isHovering ? 0.22 : 0.14), radius: isHovering ? 22 : 14, y: isHovering ? 12 : 7)
             .scaleEffect(isHovering ? 1.006 : 1)
             .animation(.spring(response: 0.28, dampingFraction: 0.82), value: isHovering)
             .onHover { isHovering = $0 }

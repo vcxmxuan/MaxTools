@@ -46,6 +46,5 @@ struct FileToolsView: View {
             Spacer()
         }
         .padding(24)
-        .background(LiquidGlassBackground())
     }
 }
