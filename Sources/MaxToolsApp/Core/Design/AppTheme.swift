@@ -1,46 +1,16 @@
 import SwiftUI
 
 enum AppTheme {
-    static let background = LinearGradient(
-        colors: [
-            Color(red: 0.03, green: 0.04, blue: 0.08),
-            Color(red: 0.07, green: 0.08, blue: 0.14),
-            Color(red: 0.02, green: 0.08, blue: 0.11)
-        ],
-        startPoint: .topLeading,
-        endPoint: .bottomTrailing
-    )
-
-    static let panel = LinearGradient(
-        colors: [
-            Color.white.opacity(0.14),
-            Color.white.opacity(0.06)
-        ],
-        startPoint: .topLeading,
-        endPoint: .bottomTrailing
-    )
-
-    static let accent = LinearGradient(
-        colors: [
-            Color(red: 0.24, green: 0.95, blue: 0.84),
-            Color(red: 0.54, green: 0.45, blue: 1.0),
-            Color(red: 1.0, green: 0.34, blue: 0.68)
-        ],
-        startPoint: .topLeading,
-        endPoint: .bottomTrailing
-    )
-
-    static let stroke = LinearGradient(
-        colors: [
-            Color.white.opacity(0.34),
-            Color.white.opacity(0.07)
-        ],
-        startPoint: .topLeading,
-        endPoint: .bottomTrailing
-    )
+    static let page = Color(nsColor: .windowBackgroundColor)
+    static let panel = Color(nsColor: .controlBackgroundColor).opacity(0.72)
+    static let elevated = Color(nsColor: .textBackgroundColor).opacity(0.88)
+    static let separator = Color(nsColor: .separatorColor).opacity(0.55)
+    static let accent = Color.accentColor
+    static let positive = Color.green
+    static let warning = Color.orange
 }
 
-struct NeonPanel<Content: View>: View {
+struct NativePanel<Content: View>: View {
     let content: Content
 
     init(@ViewBuilder content: () -> Content) {
@@ -50,13 +20,13 @@ struct NeonPanel<Content: View>: View {
     var body: some View {
         content
             .padding(16)
-            .background(AppTheme.panel)
+            .background(.regularMaterial)
             .clipShape(RoundedRectangle(cornerRadius: 8))
             .overlay {
                 RoundedRectangle(cornerRadius: 8)
-                    .stroke(AppTheme.stroke, lineWidth: 1)
+                    .stroke(AppTheme.separator, lineWidth: 0.5)
             }
-            .shadow(color: Color(red: 0.24, green: 0.95, blue: 0.84).opacity(0.12), radius: 18, y: 10)
+            .shadow(color: .black.opacity(0.08), radius: 12, y: 5)
     }
 }
 
@@ -70,29 +40,28 @@ struct ToolHeader: View {
         HStack(alignment: .center, spacing: 16) {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
-                    .fill(AppTheme.accent)
+                    .fill(.quaternary)
                 Image(systemName: systemImage)
                     .font(.system(size: 28, weight: .semibold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(.tint)
             }
             .frame(width: 64, height: 64)
 
             VStack(alignment: .leading, spacing: 6) {
                 Text(eyebrow)
                     .font(.caption.weight(.semibold))
-                    .foregroundStyle(.cyan)
+                    .foregroundStyle(.secondary)
                 Text(title)
-                    .font(.system(size: 30, weight: .bold, design: .rounded))
-                    .foregroundStyle(.white)
+                    .font(.system(size: 28, weight: .semibold, design: .rounded))
                 Text(subtitle)
                     .font(.callout)
-                    .foregroundStyle(.white.opacity(0.68))
+                    .foregroundStyle(.secondary)
             }
         }
     }
 }
 
-struct NeonButtonStyle: ButtonStyle {
+struct PrimaryActionButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.callout.weight(.semibold))
@@ -101,25 +70,39 @@ struct NeonButtonStyle: ButtonStyle {
             .padding(.vertical, 9)
             .background(AppTheme.accent.opacity(configuration.isPressed ? 0.72 : 1))
             .clipShape(RoundedRectangle(cornerRadius: 8))
-            .shadow(color: .cyan.opacity(configuration.isPressed ? 0.08 : 0.22), radius: 10, y: 6)
             .scaleEffect(configuration.isPressed ? 0.98 : 1)
     }
 }
 
-struct GlassTextEditor: View {
+struct NativeTextEditor: View {
     @Binding var text: String
 
     var body: some View {
         TextEditor(text: $text)
             .font(.system(.body, design: .monospaced))
-            .foregroundStyle(.white)
             .scrollContentBackground(.hidden)
             .padding(10)
-            .background(Color.black.opacity(0.22))
+            .background(.regularMaterial)
             .clipShape(RoundedRectangle(cornerRadius: 8))
             .overlay {
                 RoundedRectangle(cornerRadius: 8)
-                    .stroke(Color.white.opacity(0.14))
+                    .stroke(AppTheme.separator, lineWidth: 0.5)
             }
+    }
+}
+
+struct StatusPill: View {
+    let title: String
+    let systemImage: String
+    let color: Color
+
+    var body: some View {
+        Label(title, systemImage: systemImage)
+            .font(.caption.weight(.medium))
+            .foregroundStyle(color)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
+            .background(color.opacity(0.12))
+            .clipShape(Capsule())
     }
 }

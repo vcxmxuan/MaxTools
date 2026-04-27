@@ -33,7 +33,9 @@ Sources/MaxToolsApp
     ClipboardTools/    剪贴板工具
     TextTools/         文本处理
     FileTools/         文件命名
-    NetworkTools/      网络解析
+    Skills/            技能总览
+    ServerOps/         服务器运维
+    NetworkTools/      URL 解析
   Resources/           资源文件
 Tests/                 单元测试
 Docs/                  项目说明

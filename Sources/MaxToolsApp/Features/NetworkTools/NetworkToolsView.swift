@@ -8,45 +8,38 @@ struct NetworkToolsView: View {
     }
 
     var body: some View {
-        ZStack {
-            AppTheme.background.ignoresSafeArea()
+        VStack(alignment: .leading, spacing: 18) {
+            ToolHeader(
+                eyebrow: "接口辅助",
+                title: "URL 解析",
+                subtitle: "输入一个 URL，立即拆解协议、主机和路径。",
+                systemImage: "link"
+            )
 
-            VStack(alignment: .leading, spacing: 18) {
-                ToolHeader(
-                    eyebrow: "接口辅助",
-                    title: "网络解析",
-                    subtitle: "输入一个 URL，立即拆解协议、主机和路径。",
-                    systemImage: "network"
-                )
-
-                NeonPanel {
-                    VStack(alignment: .leading, spacing: 12) {
-                        Text("URL")
-                            .font(.caption.weight(.semibold))
-                            .foregroundStyle(.white.opacity(0.62))
-                        TextField("https://example.com/path", text: $rawURL)
-                            .textFieldStyle(.plain)
-                            .font(.title3)
-                            .foregroundStyle(.white)
-                            .padding(12)
-                            .background(Color.black.opacity(0.22))
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                    }
+            NativePanel {
+                VStack(alignment: .leading, spacing: 12) {
+                    Text("URL")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(.secondary)
+                    TextField("https://example.com/path", text: $rawURL)
+                        .textFieldStyle(.roundedBorder)
+                        .font(.title3)
                 }
-
-                VStack(spacing: 12) {
-                    URLPartRow(title: "协议", value: parsedURL?.scheme ?? "-")
-                    URLPartRow(title: "主机", value: parsedURL?.host() ?? "-")
-                    URLPartRow(
-                        title: "路径",
-                        value: parsedURL?.path(percentEncoded: false).isEmpty == false ? parsedURL?.path(percentEncoded: false) ?? "-" : "-"
-                    )
-                }
-
-                Spacer()
             }
-            .padding(24)
+
+            VStack(spacing: 12) {
+                URLPartRow(title: "协议", value: parsedURL?.scheme ?? "-")
+                URLPartRow(title: "主机", value: parsedURL?.host() ?? "-")
+                URLPartRow(
+                    title: "路径",
+                    value: parsedURL?.path(percentEncoded: false).isEmpty == false ? parsedURL?.path(percentEncoded: false) ?? "-" : "-"
+                )
+            }
+
+            Spacer()
         }
+        .padding(24)
+        .background(AppTheme.page)
     }
 }
 
@@ -55,15 +48,14 @@ private struct URLPartRow: View {
     let value: String
 
     var body: some View {
-        NeonPanel {
+        NativePanel {
             HStack {
                 Text(title)
                     .font(.headline)
-                    .foregroundStyle(.white.opacity(0.7))
+                    .foregroundStyle(.secondary)
                     .frame(width: 72, alignment: .leading)
                 Text(value)
                     .font(.body.monospaced())
-                    .foregroundStyle(.white)
                     .textSelection(.enabled)
                 Spacer()
             }

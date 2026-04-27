@@ -4,9 +4,15 @@ enum ToolRegistry {
     static let tools: [ToolItem] = [
         ToolItem(
             name: "总览",
-            summary: "查看所有个人工具和当前工作入口。",
+            summary: "查看个人技能、工具状态和常用入口。",
             systemImage: "square.grid.2x2",
             destination: AnyView(DashboardView())
+        ),
+        ToolItem(
+            name: "技能总览",
+            summary: "根据本机 Codex skills 生成的能力清单。",
+            systemImage: "sparkles.rectangle.stack",
+            destination: AnyView(SkillsView())
         ),
         ToolItem(
             name: "剪贴板",
@@ -27,9 +33,15 @@ enum ToolRegistry {
             destination: AnyView(FileToolsView())
         ),
         ToolItem(
-            name: "网络解析",
+            name: "服务器运维",
+            summary: "生产服务器只读检查清单和安全操作边界。",
+            systemImage: "server.rack",
+            destination: AnyView(ServerOpsView())
+        ),
+        ToolItem(
+            name: "URL 解析",
             summary: "快速拆解 URL 的协议、主机和路径。",
-            systemImage: "network",
+            systemImage: "link",
             destination: AnyView(NetworkToolsView())
         )
     ]

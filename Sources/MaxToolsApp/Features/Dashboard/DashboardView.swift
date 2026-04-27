@@ -2,63 +2,89 @@ import SwiftUI
 
 struct DashboardView: View {
     var body: some View {
-        ZStack {
-            AppTheme.background.ignoresSafeArea()
+        ScrollView {
+            VStack(alignment: .leading, spacing: 18) {
+                ToolHeader(
+                    eyebrow: "本机专属",
+                    title: "个人工具合集",
+                    subtitle: "根据你的 Codex skills 重新生成：Apple 原生界面优先，服务器操作默认安全只读。",
+                    systemImage: "square.grid.2x2"
+                )
 
-            ScrollView {
-                VStack(alignment: .leading, spacing: 22) {
-                    ToolHeader(
-                        eyebrow: "本机专属",
-                        title: "个人工具合集",
-                        subtitle: "把高频的小动作收进一个干净、快速、只为你服务的 macOS 工具舱。",
-                        systemImage: "sparkles"
-                    )
+                HStack(spacing: 12) {
+                    StatusCard(title: "自定义技能", value: "2", symbol: "person.crop.square.stack")
+                    StatusCard(title: "工具入口", value: "\(ToolRegistry.tools.count - 1)", symbol: "hammer")
+                    StatusCard(title: "安全策略", value: "只读优先", symbol: "lock.shield")
+                }
 
-                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 230), spacing: 14)], spacing: 14) {
+                NativePanel {
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("工具目录")
+                            .font(.headline)
+
                         ForEach(ToolRegistry.tools.filter { $0.name != "总览" }) { tool in
-                            NeonPanel {
-                                VStack(alignment: .leading, spacing: 12) {
-                                    ZStack {
-                                        Circle()
-                                            .fill(AppTheme.accent)
-                                        Image(systemName: tool.systemImage)
-                                            .font(.title2.weight(.semibold))
-                                            .foregroundStyle(.white)
-                                    }
-                                    .frame(width: 46, height: 46)
-
+                            HStack(spacing: 12) {
+                                Image(systemName: tool.systemImage)
+                                    .foregroundStyle(.tint)
+                                    .frame(width: 26)
+                                VStack(alignment: .leading, spacing: 2) {
                                     Text(tool.name)
-                                        .font(.headline)
-                                        .foregroundStyle(.white)
-
+                                        .font(.callout.weight(.medium))
                                     Text(tool.summary)
-                                        .font(.subheadline)
-                                        .foregroundStyle(.white.opacity(0.66))
-                                        .fixedSize(horizontal: false, vertical: true)
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
                                 }
-                                .frame(maxWidth: .infinity, minHeight: 142, alignment: .topLeading)
+                                Spacer()
                             }
-                        }
-                    }
+                            .padding(.vertical, 6)
 
-                    NeonPanel {
-                        HStack(spacing: 16) {
-                            Image(systemName: "bolt.horizontal.circle.fill")
-                                .font(.system(size: 34))
-                                .foregroundStyle(.cyan)
-                            VStack(alignment: .leading, spacing: 6) {
-                                Text("下一步可以继续扩展")
-                                    .font(.headline)
-                                    .foregroundStyle(.white)
-                                Text("新增工具时，只要添加一个 Feature 页面，并在工具注册表里加入入口。")
-                                    .font(.subheadline)
-                                    .foregroundStyle(.white.opacity(0.64))
+                            if tool.id != ToolRegistry.tools.last?.id {
+                                Divider()
                             }
                         }
                     }
                 }
-                .padding(24)
+
+                NativePanel {
+                    HStack(spacing: 12) {
+                        Image(systemName: "wand.and.stars")
+                            .font(.title2)
+                            .foregroundStyle(.tint)
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("重新生成依据")
+                                .font(.headline)
+                            Text("已读取 apple-ui 和 my-servers：界面转向 Apple 原生工具风，服务器模块只记录规则，不保存敏感凭据。")
+                                .font(.callout)
+                                .foregroundStyle(.secondary)
+                        }
+                        Spacer()
+                    }
+                }
             }
+            .padding(24)
+        }
+        .background(AppTheme.page)
+    }
+}
+
+private struct StatusCard: View {
+    let title: String
+    let value: String
+    let symbol: String
+
+    var body: some View {
+        NativePanel {
+            VStack(alignment: .leading, spacing: 8) {
+                Image(systemName: symbol)
+                    .font(.title3)
+                    .foregroundStyle(.tint)
+                Text(value)
+                    .font(.title2.weight(.semibold))
+                Text(title)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 }
