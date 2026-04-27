@@ -13,7 +13,8 @@ enum AppTheme {
 struct LiquidGlassBackground: View {
     var body: some View {
         Color(nsColor: .underPageBackgroundColor)
-        .ignoresSafeArea()
+            .backgroundExtensionEffect()
+            .ignoresSafeArea()
     }
 }
 
@@ -26,23 +27,11 @@ struct LiquidGlassPanel<Content: View>: View {
     }
 
     var body: some View {
-        content
-            .padding(16)
-            .background(.ultraThinMaterial)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-            .overlay {
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(.white.opacity(isHovering ? 0.36 : 0.22), lineWidth: 0.8)
-            }
-            .overlay(alignment: .topLeading) {
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(.white.opacity(isHovering ? 0.12 : 0.08))
-                    .frame(height: 1)
-                    .padding(.horizontal, 14)
-                    .padding(.top, 1)
-                    .blendMode(.screen)
-                    .allowsHitTesting(false)
-            }
+        GlassEffectContainer(spacing: 10) {
+            content
+                .padding(16)
+                .glassEffect(.regular.interactive(isHovering), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+        }
             .shadow(color: .black.opacity(isHovering ? 0.22 : 0.14), radius: isHovering ? 22 : 14, y: isHovering ? 12 : 7)
             .scaleEffect(isHovering ? 1.006 : 1)
             .animation(.spring(response: 0.28, dampingFraction: 0.82), value: isHovering)
@@ -74,11 +63,8 @@ struct ToolHeader: View {
         HStack(alignment: .center, spacing: 16) {
             ZStack {
                 RoundedRectangle(cornerRadius: 14)
-                    .fill(.thinMaterial)
-                    .overlay {
-                        RoundedRectangle(cornerRadius: 14)
-                            .stroke(.white.opacity(0.28), lineWidth: 0.8)
-                    }
+                    .fill(.clear)
+                    .glassEffect(.clear.interactive(), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
                 Image(systemName: systemImage)
                     .font(.system(size: 28, weight: .semibold))
                     .foregroundStyle(.tint)
@@ -100,23 +86,6 @@ struct ToolHeader: View {
     }
 }
 
-struct PrimaryActionButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .font(.callout.weight(.semibold))
-            .foregroundStyle(.white)
-            .padding(.horizontal, 14)
-            .padding(.vertical, 9)
-            .background(AppTheme.accent.opacity(configuration.isPressed ? 0.72 : 1))
-            .clipShape(RoundedRectangle(cornerRadius: 8))
-            .overlay {
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(.white.opacity(0.28), lineWidth: 0.6)
-            }
-            .scaleEffect(configuration.isPressed ? 0.98 : 1)
-    }
-}
-
 struct NativeTextEditor: View {
     @Binding var text: String
 
@@ -125,12 +94,7 @@ struct NativeTextEditor: View {
             .font(.system(.body, design: .monospaced))
             .scrollContentBackground(.hidden)
             .padding(10)
-            .background(.ultraThinMaterial)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-            .overlay {
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(.white.opacity(0.2), lineWidth: 0.7)
-            }
+            .glassEffect(.regular.interactive(), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
     }
 }
 

@@ -4,9 +4,9 @@ MaxTools 是一个只给自己使用的 macOS 个人工具合集，使用 Swift 
 
 ## 环境要求
 
-- macOS 14+
-- Xcode 15+
-- Swift 5.10+
+- macOS 26+
+- Xcode 26+
+- Swift 6.2+
 
 ## 运行方式
 

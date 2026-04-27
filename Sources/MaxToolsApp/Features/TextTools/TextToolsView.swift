@@ -29,14 +29,14 @@ struct TextToolsView: View {
                     } label: {
                         Label("转为大写", systemImage: "textformat.abc")
                     }
-                    .buttonStyle(PrimaryActionButtonStyle())
+                    .buttonStyle(.glassProminent)
 
                     Button {
                         text = text.lowercased()
                     } label: {
                         Label("转为小写", systemImage: "textformat")
                     }
-                    .buttonStyle(PrimaryActionButtonStyle())
+                    .buttonStyle(.glass)
                 }
             }
 

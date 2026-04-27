@@ -20,7 +20,7 @@ struct ClipboardToolsView: View {
                     } label: {
                         Label("读取剪贴板", systemImage: "arrow.down.doc")
                     }
-                    .buttonStyle(PrimaryActionButtonStyle())
+                    .buttonStyle(.glassProminent)
 
                     Button {
                         text = text.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -28,7 +28,7 @@ struct ClipboardToolsView: View {
                     } label: {
                         Label("清理并复制", systemImage: "wand.and.stars")
                     }
-                    .buttonStyle(PrimaryActionButtonStyle())
+                    .buttonStyle(.glass)
 
                     Spacer()
 

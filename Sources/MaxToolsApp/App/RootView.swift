@@ -8,6 +8,7 @@ struct RootView: View {
             ZStack {
                 Color(nsColor: .controlBackgroundColor)
                     .opacity(0.72)
+                    .backgroundExtensionEffect()
                     .ignoresSafeArea()
 
                 List(ToolRegistry.tools, selection: $selectedToolID) { tool in
@@ -27,9 +28,22 @@ struct RootView: View {
             }
         }
         .toolbar {
+            ToolbarSpacer(.flexible)
+
             ToolbarItem(placement: .principal) {
                 Text(ToolRegistry.tool(withID: selectedToolID)?.name ?? "总览")
                     .font(.headline)
+            }
+
+            ToolbarSpacer(.fixed)
+
+            ToolbarItem {
+                Button {
+                    selectedToolID = ToolRegistry.defaultTool.id
+                } label: {
+                    Label("总览", systemImage: "square.grid.2x2")
+                }
+                .buttonStyle(.glass)
             }
         }
     }
