@@ -4,7 +4,7 @@ import SwiftUI
 struct MaxToolsApp: App {
     var body: some Scene {
         WindowGroup {
-            RootView()
+            ContentView()
                 .frame(minWidth: 980, minHeight: 640)
         }
         .windowStyle(.titleBar)

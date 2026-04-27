@@ -11,12 +11,7 @@ let package = Package(
         .executable(name: "MaxTools", targets: ["MaxToolsApp"])
     ],
     targets: [
-        .executableTarget(
-            name: "MaxToolsApp",
-            resources: [
-                .process("Resources")
-            ]
-        ),
+        .executableTarget(name: "MaxToolsApp"),
         .testTarget(
             name: "MaxToolsAppTests",
             dependencies: ["MaxToolsApp"]
